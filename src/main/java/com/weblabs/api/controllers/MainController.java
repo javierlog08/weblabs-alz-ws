@@ -1,6 +1,7 @@
 package com.weblabs.api.controllers;
 
 
+import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class MainController {
 
 	@RequestMapping("/")
 	@CrossOrigin
-	String index(HttpServletResponse  response) {
+	String index() {
 		return "Welcome to API Base project.";
 	}
 	
@@ -40,6 +41,12 @@ public class MainController {
 		Iterable<FooModel> i = fooRepository.findAll();
 		
 		return i;
+	}
+	
+	@RequestMapping("/login")
+	@CrossOrigin(origins="http://localhost:4200", maxAge = 3600,exposedHeaders="x-auth-token")
+	String login(HttpServletResponse response) {		
+		return "Success Login.";
 	}
 	
 	@RequestMapping("/books")
