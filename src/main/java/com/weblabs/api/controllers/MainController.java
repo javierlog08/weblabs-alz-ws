@@ -1,6 +1,10 @@
 package com.weblabs.api.controllers;
 
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -22,13 +26,16 @@ public class MainController {
 	
 	@Autowired
 	ClientService clientService;
-	
+
 	@RequestMapping("/")
-	String index() {
+	@CrossOrigin
+	String index(HttpServletResponse  response) {
 		return "Welcome to API Base project.";
 	}
 	
+	
 	@RequestMapping("/foo")
+	@CrossOrigin
 	Iterable<FooModel> foo() {
 		Iterable<FooModel> i = fooRepository.findAll();
 		

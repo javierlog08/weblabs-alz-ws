@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 
 
+
 @Configuration
 @EnableWebSecurity
 class WebConfig extends WebSecurityConfigurerAdapter {
@@ -13,6 +14,8 @@ class WebConfig extends WebSecurityConfigurerAdapter {
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
+		.cors() // To allow CORS work on MVC controller we need this here. -> https://docs.spring.io/spring-security/site/docs/current/reference/html5/#cors
+		.and() 
 		.authorizeRequests()
 			.antMatchers("/").permitAll()
 			.anyRequest().authenticated()
