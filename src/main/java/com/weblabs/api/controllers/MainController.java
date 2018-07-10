@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -55,7 +56,8 @@ public class MainController {
 	 */
 	@RequestMapping("/login")
 	@CrossOrigin(maxAge = 3600,exposedHeaders="x-auth-token")
-	String login() {		
+	String login(HttpServletRequest request) {
+		request.getSession().setMaxInactiveInterval(900); // 15 minutes default session expiration
 		return "Success Login.";
 	}
 	
