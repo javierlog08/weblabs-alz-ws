@@ -2,6 +2,7 @@ package com.weblabs.api.controllers;
 
 
 import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import com.weblabs.api.models.FooModel;
 import com.weblabs.api.repositories.FooRepository;
 import com.weblabs.api.services.BookService;
 import com.weblabs.api.services.ClientService;
+import com.weblabs.api.services.SessionService;
 
 @RestController
 public class MainController {
@@ -27,6 +29,9 @@ public class MainController {
 	
 	@Autowired
 	ClientService clientService;
+	
+	@Autowired
+	SessionService sessionService;
 
 	@RequestMapping("/")
 	@CrossOrigin
@@ -50,8 +55,22 @@ public class MainController {
 	 */
 	@RequestMapping("/login")
 	@CrossOrigin(maxAge = 3600,exposedHeaders="x-auth-token")
-	String login(HttpServletResponse response) {		
+	String login() {		
 		return "Success Login.";
+	}
+	
+	
+	/**
+	 * Method used to logout and destroy current session using the token in the requet header
+	 * @param request
+	 * @return
+	 */
+	@RequestMapping("/logout")
+	@CrossOrigin(maxAge = 3600,exposedHeaders="x-auth-token")
+	String logout(HttpServletRequest request) {
+		String token = request.getHeader("x-auth-token");
+		sessionService.delete(token);
+		return "Success Logout.";
 	}
 	
 	@RequestMapping("/books")
