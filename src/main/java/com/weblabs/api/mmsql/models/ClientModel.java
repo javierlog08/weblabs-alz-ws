@@ -4,32 +4,32 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 
-@Entity(name="weblabs_cliente")
+@Entity(name="weblabs_clientes")
 public class ClientModel {
 
 	@Id
-	@Column(name="ClienteCodigo")
+	@Column(name="CLCOD")
 	public String codigo_cliente;
 	
 	
-	@Column(name="ClientePersona")
+	@Column(name="TIPO")
 	public String persona;
 	
-	@Column(name="ClienteRucCed")
+	@Column(name="ID")
 	public String cip_ruc;
 	
-	@Column(name="ClienteSexo")
+	@Column(name="GENERO")
 	public String sexo;
 	
-	@Column(name="ClienteEstadoCivil")
+	@Column(name="ESTCIVIL")
 	public String estado_civil;
 	
-	@Column(name="ClienteNombreCompleto")
+	@Column(name="CLIENTE")
 	public String nombre_completo;
 	
-	@Column(name="ClienteStatus")
+	@Column(name="ESTATUS")
 	public String status;
 	
-	@Column(name="ClienteProfesion")
+	@Column(name="PROFESION")
 	public String profesion;
 }

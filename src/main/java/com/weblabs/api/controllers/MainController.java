@@ -29,10 +29,10 @@ public class MainController {
 	BookService bookService;
 	
 	@Autowired
-	ClientService clientService;
+	SessionService sessionService;
 	
 	@Autowired
-	SessionService sessionService;
+	ClientService clientService;
 
 	@RequestMapping("/")
 	@CrossOrigin
@@ -76,6 +76,7 @@ public class MainController {
 	}
 	
 	@RequestMapping("/books")
+	@CrossOrigin(maxAge = 3600,exposedHeaders="x-auth-token")
 	Iterable<BookModel> books() {
 		return bookService.list();
 	}
@@ -85,3 +86,4 @@ public class MainController {
 		return clientService.all();
 	}
 }
+	

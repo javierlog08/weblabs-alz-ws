@@ -2,10 +2,8 @@ package com.weblabs.api.config;
 
 import javax.sql.DataSource;
 
-import org.springframework.boot.autoconfigure.flyway.FlywayDataSource;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,32 +20,41 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
  * @author Javier
  *
  */
-@EnableJpaRepositories("com.weblabs.api.repositories") 
+@EnableJpaRepositories(basePackages="com.weblabs.api.repositories", entityManagerFactoryRef = "entityManagerFactory") 
 @Configuration
 public class PostgresqlConfig {
 	
 	@Bean
 	@Primary
-	@FlywayDataSource
-	@ConfigurationProperties(prefix="postgresql.datasource")
-	public DataSourceProperties postgresqlDataSourceProperties() {
+	@ConfigurationProperties("postgresql.datasource")
+	public DataSourceProperties postgresqlDataSourceProperties()  {
 		return new DataSourceProperties();
 	}
-
 	
+	/***
+	 * we are setting postgres datasource as primary database engine, if you want to add another one you must to create a new configuration file.
+	 * @link https://docs.spring.io/spring-boot/docs/2.0.2.RELEASE/reference/htmlsingle/#howto-two-datasources
+	 * @return
+	 */
 	@Bean
 	@Primary
-	@ConfigurationProperties(prefix="postgresql.datasource")
-	public DataSource postgresqlDatasource() {
+	public DataSource postgresqlDataSource() {
 		return postgresqlDataSourceProperties().initializeDataSourceBuilder().build();
 	}
 	
+	
+	/**
+	 * If you are goint to use multiple datasources you need also specify entityManagerFactory , just to say the package of the models this datasource affect.
+	 * @link https://docs.spring.io/spring-boot/docs/2.0.2.RELEASE/reference/htmlsingle/#howto-use-custom-entity-manager
+	 * @param builder
+	 * @return
+	 */
 	@Bean
 	@Primary
 	public LocalContainerEntityManagerFactoryBean entityManagerFactory(
 			EntityManagerFactoryBuilder builder) {
 		return builder
-				.dataSource(postgresqlDatasource())
+				.dataSource(postgresqlDataSource())
 				.packages("com.weblabs.api.models")
 				.build();
 	}
