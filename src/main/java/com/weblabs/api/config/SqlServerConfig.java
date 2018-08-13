@@ -1,5 +1,7 @@
 package com.weblabs.api.config;
 
+import java.util.Properties;
+
 import javax.sql.DataSource;
 
 import org.springframework.boot.autoconfigure.jdbc.DataSourceProperties;
@@ -37,6 +39,15 @@ public class SqlServerConfig {
 				.packages("com.weblabs.api.mmsql.models")
 				.build();
 	}
+	
+	final Properties additionalProperties() {
+        final Properties hibernateProperties = new Properties();
+        hibernateProperties.setProperty("showSql", "true");
+        hibernateProperties.setProperty("hibernate.show_sql", "true");
+        hibernateProperties.setProperty("hibernate.format_sql", "true");
+        hibernateProperties.setProperty("hibernate.query.substitutions", "false");
+        return hibernateProperties;
+    }
 
 
 }

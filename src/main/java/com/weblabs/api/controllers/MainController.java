@@ -6,9 +6,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.weblabs.api.mmsql.models.ClientModel;
@@ -81,9 +83,14 @@ public class MainController {
 		return bookService.list();
 	}
 	
-	@RequestMapping("/clients")
-	Iterable<ClientModel> clients() {
-		return clientService.all();
+	@RequestMapping(value="/clients")
+	@CrossOrigin(maxAge = 3600,exposedHeaders="x-auth-token")
+	Iterable<ClientModel> clients(
+		@RequestParam(value="start_page", required=false) int start_page,
+		@RequestParam(value="end_page", required=false) int end_page
+	) {
+		
+		return clientService.all(start_page, end_page);
 	}
 }
 	
