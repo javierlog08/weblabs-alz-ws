@@ -92,5 +92,18 @@ public class MainController {
 		
 		return clientService.all(start_page, end_page);
 	}
+	
+	@RequestMapping(value="/clients/search")
+	@CrossOrigin(maxAge = 3600,exposedHeaders="x-auth-token")
+	Iterable<ClientModel> clientsSearch(
+		@RequestParam(value="term", required=false) String term
+	) {
+		
+		Iterable<ClientModel> clients = null;
+		
+		clients = clientService.findByTerm(term);
+		
+		return clients;
+	}
 }
 	

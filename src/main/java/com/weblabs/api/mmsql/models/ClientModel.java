@@ -1,8 +1,13 @@
 package com.weblabs.api.mmsql.models;
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity(name="weblabs_clientes")
 public class ClientModel {
@@ -25,11 +30,18 @@ public class ClientModel {
 	public String estado_civil;
 	
 	@Column(name="CLIENTE")
-	public String nombre_completo;
+	public String nombreCompleto;
 	
 	@Column(name="ESTATUS")
 	public String status;
 	
 	@Column(name="PROFESION")
 	public String profesion;
+	
+	@OneToMany(
+		mappedBy="codigo_cliente",
+		fetch = FetchType.EAGER,
+		cascade = CascadeType.ALL
+	)
+	public List<PhonesModel> phones;
 }

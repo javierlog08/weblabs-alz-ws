@@ -10,4 +10,6 @@ public interface ClientsRepository extends CrudRepository<ClientModel, String> {
 	
 	@Query(value="SELECT * FROM weblabs_clientes ORDER BY CLIENTE OFFSET :start ROWS FETCH NEXT :end ROWS ONLY", nativeQuery = true)
 	Iterable<ClientModel> getClients(@Param("start") int start, @Param("end")int end);
+	
+	Iterable<ClientModel> findByNombreCompletoContaining(String term);
 }

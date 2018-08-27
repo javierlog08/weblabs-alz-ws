@@ -17,4 +17,8 @@ public class ClientService {
 		
 		return clients_repo.getClients(start_page, end_page);
 	}
+
+	public Iterable<ClientModel> findByTerm(String term) {
+		return clients_repo.findByNombreCompletoContaining(term);
+	}
 }
