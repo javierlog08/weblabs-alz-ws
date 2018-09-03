@@ -9,6 +9,9 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
 @Entity(name="weblabs_clientes")
 public class ClientModel {
 
@@ -44,4 +47,12 @@ public class ClientModel {
 		cascade = CascadeType.ALL
 	)
 	public List<PhonesModel> phones;
+	
+	@OneToMany(
+		mappedBy="codigo_cliente",
+		fetch = FetchType.EAGER,
+		cascade = CascadeType.ALL
+	)
+	@Fetch(value = FetchMode.SUBSELECT)
+	public List<AddressModel> addresses;
 }
